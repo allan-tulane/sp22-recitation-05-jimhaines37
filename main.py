@@ -29,8 +29,12 @@ def count_values(a, k):
     >>> count_values([2,2,1,0,1,0,1,3], 3)
     [2, 3, 2, 1]
     """
-    ###TODO
-    pass
+    result = [0] * (k+1)
+    
+    for i in a:
+      result[i] += 1 
+    
+    return result
 
 def test_count_values():
     assert count_values([2,2,1,0,1,0,1,3], 3) == [2, 3, 2, 1]
@@ -46,8 +50,11 @@ def get_positions(counts):
     >>> get_positions([2, 3, 2, 1])
     [0, 2, 5, 7]    
     """
-    ###TODO
-    pass
+    a,b = scan(plus, 0, counts)
+
+    a = [0] + a[:-1]
+
+    return a
     
 def test_get_positions():
     assert get_positions([2, 3, 2, 1]) == [0, 2, 5, 7]
@@ -66,8 +73,14 @@ def construct_output(a, positions):
     >>> construct_output([2,2,1,0,1,0,1,3], [0, 2, 5, 7])
     [0,0,1,1,1,2,2,3]    
     """
-    ###TODO
-    pass
+    result = [0] * len(a)
+
+    for i in a:
+      pos = positions[i]
+      result[pos] = i
+      positions[i] += 1
+
+    return result
 
 def test_construct_output():
     assert construct_output([2,2,1,0,1,0,1,3], [0, 2, 5, 7]) == [0,0,1,1,1,2,2,3]
@@ -85,12 +98,19 @@ def test_count_values_mr():
     assert count_values_mr([2,2,1,0,1,0,1,3], 3) == [2, 3, 2, 1]
 
 def count_map(value):
-    ###TODO
-    pass
+    return (value, 1)
 
 def count_reduce(group):
-    ###TODO
-    pass
+    total = reduce(plus, 0, group[1])
+    num = group[0]
+    
+    result = []
+
+    result.append((
+        num,
+        total
+    ))
+    return result
 
 
 # the below functions are provided for use above.
@@ -139,3 +159,5 @@ def iterate(f, x, a):
     
 def flatten(sequences):
     return iterate(plus, [], sequences)
+
+
